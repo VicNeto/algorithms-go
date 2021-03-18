@@ -1,4 +1,4 @@
-package divide_conquer
+package divideConquer
 
 // MergeCountInv func
 func MergeCountInv(array []int) ([]int, int) {
@@ -7,16 +7,16 @@ func MergeCountInv(array []int) ([]int, int) {
 	}
 
 	middle := int(len(array) / 2)
-	left, left_count := MergeCountInv(array[:middle])
-	right, right_count := MergeCountInv(array[middle:])
-	merged, count_inv := merge_and_count_split_inv(left, right)
-	return merged, left_count + right_count + count_inv
+	left, leftCount := MergeCountInv(array[:middle])
+	right, rightCount := MergeCountInv(array[middle:])
+	merged, countInv := mergeAndCountSplitInv(left, right)
+	return merged, leftCount + rightCount + countInv
 }
 
-func merge_and_count_split_inv(left []int, right []int) ([]int, int) {
+func mergeAndCountSplitInv(left []int, right []int) ([]int, int) {
 	var result []int
 	rightIndex, leftIndex := 0, 0
-	split_inv := 0
+	splitInv := 0
 
 	for leftIndex < len(left) && rightIndex < len(right) {
 		if left[leftIndex] < right[rightIndex] {
@@ -25,7 +25,8 @@ func merge_and_count_split_inv(left []int, right []int) ([]int, int) {
 		} else {
 			result = append(result, right[rightIndex])
 			rightIndex++
-			split_inv += len(left) - leftIndex
+			// important step to calculate split inversions
+			splitInv += len(left) - leftIndex
 		}
 	}
 
@@ -38,5 +39,5 @@ func merge_and_count_split_inv(left []int, right []int) ([]int, int) {
 		rightIndex++
 	}
 
-	return result, split_inv
+	return result, splitInv
 }
