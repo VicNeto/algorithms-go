@@ -1,5 +1,10 @@
 package sorting
 
+import (
+	"math/rand"
+	"time"
+)
+
 func QuickSort(array *[]int, left int, right int) {
 	if left >= right {
 		return
@@ -7,7 +12,7 @@ func QuickSort(array *[]int, left int, right int) {
 	pivot := choosePivot(left, right)
 	(*array)[left], (*array)[pivot] = (*array)[pivot], (*array)[left]
 	newPivot := partition(array, left, right)
-	QuickSort(array, left, newPivot-1)
+	QuickSort(array, left, newPivot)
 	QuickSort(array, newPivot+1, right)
 }
 
@@ -24,6 +29,6 @@ func partition(array *[]int, left int, right int) int {
 }
 
 func choosePivot(left int, right int) int {
-	// return int((left + right) / 2)
-	return right - 1
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(right-left) + left
 }
