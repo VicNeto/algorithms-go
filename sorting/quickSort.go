@@ -17,14 +17,15 @@ func QuickSort(array *[]int, left int, right int) {
 }
 
 func partition(array *[]int, left int, right int) int {
+	arr := *array
 	i := left + 1
 	for j := left + 1; j < right; j++ {
-		if (*array)[j] < (*array)[left] {
-			(*array)[j], (*array)[i] = (*array)[i], (*array)[j]
+		if arr[j] < arr[left] {
+			arr[j], arr[i] = arr[i], arr[j]
 			i++
 		}
 	}
-	(*array)[left], (*array)[i-1] = (*array)[i-1], (*array)[left]
+	arr[left], arr[i-1] = arr[i-1], arr[left]
 	return i - 1
 }
 

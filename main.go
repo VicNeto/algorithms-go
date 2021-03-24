@@ -2,6 +2,7 @@ package main
 
 import (
 	conquer "algoritms-go/divideConquer"
+	"algoritms-go/searching"
 	"algoritms-go/sorting"
 	"fmt"
 )
@@ -14,4 +15,8 @@ func main() {
 	b := []int{3, 2, 7, 1, 6, 4, 5}
 	sorting.QuickSort(&b, 0, len(b))
 	fmt.Println(b)
+	c := []int{4, 2, 7, 1, 6, 5, 3}
+	iPos := searching.RSelect(c, 5)
+	fmt.Println(iPos)
+	fmt.Println(c)
 }
