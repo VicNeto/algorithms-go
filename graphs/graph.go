@@ -12,36 +12,39 @@ type Vertex struct {
 }
 
 type Edges struct {
-	destinations map[string]uint
+	destinations map[*Vertex]int
 }
 
 type Graph struct {
-	vertices []*Vertex
-	edges    map[string]*Edges
+	vertices map[string]*Vertex
+	edges    map[*Vertex]*Edges
 }
 
 func (g *Graph) AddVertex(v string) {
 	nV := Vertex{v}
-	g.vertices = append(g.vertices, &nV)
+	if g.vertices == nil {
+		g.vertices = make(map[string]*Vertex)
+	}
+	g.vertices[v] = &nV
 }
 
-func (g *Graph) AddEdge(s, d, value string) {
+func (g *Graph) AddEdge(s, d *Vertex, value string) {
 	if g.edges == nil {
-		g.edges = make(map[string]*Edges)
+		g.edges = make(map[*Vertex]*Edges)
 	}
 	if g.edges[s] == nil {
 		g.edges[s] = &Edges{}
-		g.edges[s].destinations = make(map[string]uint)
+		g.edges[s].destinations = make(map[*Vertex]int)
 	}
 	val, _ := strconv.ParseInt(value, 10, 64)
-	g.edges[s].destinations[d] = uint(val)
+	g.edges[s].destinations[d] = int(val)
 }
 
 func (g *Graph) String() {
 	for _, v := range g.vertices {
 		fmt.Printf("%v ->", v.identifier)
-		if g.edges[v.identifier] != nil {
-			for dest, e := range g.edges[v.identifier].destinations {
+		if g.edges[v] != nil {
+			for dest, e := range g.edges[v].destinations {
 				fmt.Printf("%s (%d)", dest, e)
 			}
 		}
@@ -49,13 +52,24 @@ func (g *Graph) String() {
 	}
 }
 
-func CreateGraph(vertices []string, edges [][]string) Graph {
+// CreateGraph return Graph
+func CreateGraph(vertices []string, edges [][]string, directed bool) Graph {
 	var g Graph
 	for _, v := range vertices {
 		g.AddVertex(v)
 	}
 	for _, e := range edges {
-		g.AddEdge(e[0], e[1], "1")
+		if g.vertices[e[0]] != nil && g.vertices[e[1]] != nil {
+			g.AddEdge(g.vertices[e[0]], g.vertices[e[1]], "1")
+			if !directed {
+				g.AddEdge(g.vertices[e[1]], g.vertices[e[0]], "1")
+			}
+		}
 	}
 	return g
+}
+
+// UndirectedGraph return Graph
+func UndirectedGraph(vertices []string, edges [][]string) Graph {
+	return CreateGraph(vertices, edges, false)
 }
