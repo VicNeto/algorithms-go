@@ -21,4 +21,9 @@ func main() {
 	gr.String()
 	w := graphs.BreadFirstSearch(&gr, "a")
 	fmt.Printf("%v\n", w)
+	ugr := graphs.UndirectedGraph([]string{"a", "b", "c", "d", "e", "f", "g", "h"},
+		[][]string{{"a", "b"}, {"a", "c"}, {"b", "c"}, {"d", "e"}, {"d", "f"}, {"g", "h"}})
+	cc, ncc := graphs.UCC(&ugr)
+	ugr.String()
+	fmt.Printf("%v\n%d\n", cc, ncc)
 }
