@@ -53,16 +53,21 @@ func (g *Graph) String() {
 }
 
 // CreateGraph return Graph
-func CreateGraph(vertices []string, edges [][]string, directed bool) Graph {
+func CreateGraph(vertices []string, edges [][]string, directed bool, unitLength bool) Graph {
 	var g Graph
+	var weight string
 	for _, v := range vertices {
 		g.AddVertex(v)
 	}
 	for _, e := range edges {
 		if g.vertices[e[0]] != nil && g.vertices[e[1]] != nil {
-			g.AddEdge(g.vertices[e[0]], g.vertices[e[1]], "1")
+			weight = "1"
+			if !unitLength {
+				weight = e[2]
+			}
+			g.AddEdge(g.vertices[e[0]], g.vertices[e[1]], weight)
 			if !directed {
-				g.AddEdge(g.vertices[e[1]], g.vertices[e[0]], "1")
+				g.AddEdge(g.vertices[e[1]], g.vertices[e[0]], weight)
 			}
 		}
 	}
@@ -71,5 +76,5 @@ func CreateGraph(vertices []string, edges [][]string, directed bool) Graph {
 
 // UndirectedGraph return Graph
 func UndirectedGraph(vertices []string, edges [][]string) Graph {
-	return CreateGraph(vertices, edges, false)
+	return CreateGraph(vertices, edges, false, true)
 }

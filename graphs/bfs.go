@@ -1,6 +1,7 @@
 package graphs
 
 import (
+	"container/list"
 	"math"
 )
 
@@ -8,18 +9,20 @@ func BreadFirstSearch(g *Graph, source string) map[string]int {
 	unexplored, lengths := initializeVertices(g.vertices)
 	lengths[source] = 0
 	unexplored[source] = false
-	queue := []*Vertex{}
-	queue = append(queue, g.vertices[source])
+	queue := list.New()
+	queue.PushBack(g.vertices[source])
 	var v *Vertex
+	var element *list.Element
 
-	for len(queue) > 0 {
-		v = queue[0]
-		queue = queue[1:]
+	for queue.Len() > 0 {
+		element = queue.Front()
+		v = element.Value.(*Vertex)
+		queue.Remove(element)
 		for dest, _ := range g.edges[v].destinations {
 			if unexplored[dest.identifier] {
 				unexplored[dest.identifier] = false
 				lengths[dest.identifier] = lengths[v.identifier] + 1
-				queue = append(queue, dest)
+				_ = queue.PushBack(dest)
 			}
 		}
 	}
