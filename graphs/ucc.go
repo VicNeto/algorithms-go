@@ -16,7 +16,7 @@ func UCC(g *Graph) (map[*Vertex]int, int) {
 				queue = queue[1:]
 				cc[i] = numCC
 				if g.edges[v].destinations != nil {
-					for dest, _ := range g.edges[v].destinations {
+					for dest := range g.edges[v].destinations {
 						if unexplored[dest.identifier] {
 							unexplored[dest.identifier] = false
 							cc[dest] = numCC

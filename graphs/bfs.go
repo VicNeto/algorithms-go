@@ -18,7 +18,7 @@ func BreadFirstSearch(g *Graph, source string) map[string]int {
 		element = queue.Front()
 		v = element.Value.(*Vertex)
 		queue.Remove(element)
-		for dest, _ := range g.edges[v].destinations {
+		for dest := range g.edges[v].destinations {
 			if unexplored[dest.identifier] {
 				unexplored[dest.identifier] = false
 				lengths[dest.identifier] = lengths[v.identifier] + 1
@@ -33,7 +33,7 @@ func BreadFirstSearch(g *Graph, source string) map[string]int {
 func initializeVertices(vertices map[string]*Vertex) (map[string]bool, map[string]int) {
 	unexp := make(map[string]bool)
 	lengths := make(map[string]int)
-	for key, _ := range vertices {
+	for key := range vertices {
 		unexp[key] = true
 		lengths[key] = int(math.NaN())
 	}

@@ -26,4 +26,8 @@ func main() {
 	cc, ncc := graphs.UCC(&ugr)
 	ugr.String()
 	fmt.Printf("%v\n%d\n", cc, ncc)
+	dgr := graphs.CreateGraph([]string{"a", "b", "c", "d"}, [][]string{{"a", "b"}, {"a", "c"}, {"b", "d"}, {"c", "d"}}, true, true)
+	dgr.String()
+	topo := graphs.TopologicalSort(&dgr)
+	fmt.Printf("%v\n", topo)
 }
