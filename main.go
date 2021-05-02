@@ -1,7 +1,7 @@
 package main
 
 import (
-	"algoritms-go/sorting"
+	"algoritms-go/greedyAlgorithms"
 	"fmt"
 )
 
@@ -30,6 +30,23 @@ func main() {
 	// dgr.String()
 	// topo := graphs.TopologicalSort(&dgr)
 	// fmt.Printf("%v\n", topo)
-	heapi := sorting.HeapSort([]int{7, 6, 9, 11, 1, 2, 5, 2, 3, 6, 1, 38})
-	fmt.Println(heapi)
+	// heapi := sorting.HeapSort([]int{7, 6, 9, 11, 1, 2, 5, 2, 3, 6, 1, 38})
+	// fmt.Println(heapi)
+	// root := &dataStructures.SimpleBinaryTreeNode{Key: 5, Left: nil, Right: nil}
+	// dataStructures.AddNode(root, 3)
+	// dataStructures.AddNode(root, 1)
+	// dataStructures.AddNode(root, 7)
+	// dataStructures.AddNode(root, 12)
+	// dataStructures.AddNode(root, 4)
+	// dataStructures.Order(root)
+	alphabet := make(map[string]float32)
+	alphabet["A"] = 3
+	alphabet["B"] = 2
+	alphabet["C"] = 6
+	alphabet["D"] = 8
+	alphabet["E"] = 2
+	alphabet["F"] = 6
+	fmt.Println(alphabet)
+	c := greedyAlgorithms.Huffman(alphabet)
+	fmt.Println(c)
 }
